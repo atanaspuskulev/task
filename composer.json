@@ -1,0 +1,19 @@
+{
+    "name": "testapp/testapp",
+    "description": "Simple test application",
+    "require": {
+        "php": "^8.2",
+        "vlucas/phpdotenv": "^5.6",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Lib\\": "src/"
+        },
+        "files": [
+            "Helpers/DateTimeHelper.php",
+            "Helpers/Pagination.php"
+        ]
+    }
+}

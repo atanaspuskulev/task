@@ -1,0 +1,66 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx_test_app
+    ports:
+      - "80:80"
+    volumes:
+      - ./public:/var/www/html/public
+      - ./dockerfiles/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - test-app-network
+
+  php:
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: php_test_app
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - db
+    networks:
+      - test-app-network
+
+  db:
+    image: mysql
+    restart: always
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'testpassword'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: 'testapp'
+      MYSQL_USER: 'testuser'
+      MYSQL_PASSWORD: 'testpassword'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - './dockerfiles/mysql-custom.cnf:/etc/mysql/conf.d/mysqld.cnf'
+      - './dockerfiles/init.sql:/docker-entrypoint-initdb.d/init.sql'
+    networks:
+      - test-app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8081:80
+    environment:
+      MYSQL_ROOT_PASSWORD: 'testpassword'
+      PMA_HOST: db
+    depends_on:
+      - db
+    networks:
+      - test-app-network
+
+volumes:
+  db_data:
+
+networks:
+  test-app-network:
+    driver: bridge
