@@ -152,6 +152,18 @@ abstract class Model
         ];
     }
 
+    public static function getOneById(int $id)
+    {
+        static::boot();
+
+        $stmt = static::$pdo->prepare('SELECT * FROM ' . static::$table . ' WHERE id = :id LIMIT 1');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $task = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $task ?: null;
+    }
 
     protected static function boot(): void
     {

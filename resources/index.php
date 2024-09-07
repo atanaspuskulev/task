@@ -64,6 +64,9 @@
                                 <td><?php echo \App\Helpers\DateTimeHelper::formatFromConfig($task->created_at); ?></td>
                                 <td><?php echo $task->completed_at ?? '-'; ?></td>
                                 <td>
+                                    <a title="View Task" class="btn btn-sm btn-primary" onclick="openViewModal('<?php echo $task->id; ?>'); return false;">
+                                        <i class="bi bi-play-btn-fill"></i>
+                                    </a>
                                     <a title="Complete task" class="btn btn-sm btn-success" onclick="openCompleteModal('<?php echo $task->id; ?>'); return false;">
                                         <i class="bi bi-ubuntu"></i>
                                     </a>
@@ -164,6 +167,48 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-success" onclick="createTask();">ADD TASK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewTaskModal" tabindex="-1" aria-labelledby="ViewModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ViewModalTitle">Task Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="task_title_details"></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="task_content_details"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span><b>Created At: </b></span>
+                    </div>
+                    <div class="col-md-9">
+                        <span class="task_created_at_details"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span><b>Completed At: </b></span>
+                    </div>
+                    <div class="col-md-8">
+                        <span class="task_completed_at_details"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

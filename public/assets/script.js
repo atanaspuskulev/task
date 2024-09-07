@@ -34,6 +34,10 @@ function confirmComplete() {
 
 function openCreateModal() {
     $('#createTaskModal').modal('show');
+
+    $.post('/tasks/create', { title, description }, function () {
+        location.href = '/';
+    })
 }
 
 function createTask() {
@@ -53,4 +57,20 @@ function createTask() {
     $.post('/tasks/create', { title, description }, function () {
         location.href = '/';
     })
+}
+
+function openViewModal(id) {
+    $('#viewTaskModal').modal('show');
+
+    $.ajax({
+        url: '/tasks/show/' + id,
+        type: 'POST',
+        dataType: 'json',
+        success: function (response) {
+            $('.task_title_details').text(response.title);
+            $('.task_content_details').text(response.content);
+            $('.task_created_at_details').text(response.created_at);
+            $('.task_completed_at_details').text(response.completed_at);
+        }
+    });
 }

@@ -52,4 +52,11 @@ class IndexController extends MainController
             'content' => $request->get('content')
         ]);
     }
+
+    public function show($id)
+    {
+        $result = $this->taskService->show($id);
+
+        echo json_encode($result);
+    }
 }

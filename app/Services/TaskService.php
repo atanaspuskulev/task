@@ -51,4 +51,9 @@ class TaskService
 
         return Task::create($data);
     }
+
+    public function show(int $id)
+    {
+        return Task::getOneById($id);
+    }
 }
