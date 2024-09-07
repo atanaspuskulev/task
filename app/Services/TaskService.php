@@ -15,6 +15,10 @@ class TaskService
             $orderByFiltering = [
                $request->get('order_by') => $request->get('direction', 'asc')
             ];
+        } else {
+            $orderByFiltering = [
+                'created_at' => 'desc'
+            ];
         }
 
         $filtering = [
@@ -37,5 +41,14 @@ class TaskService
     public function update(int $id, array $data)
     {
         return Task::update($id, $data);
+    }
+
+    public function create(array $data)
+    {
+        if(empty($data['created_at'])) {
+            $data['created_at'] = date('Y-m-d H:i:s');
+        }
+
+        return Task::create($data);
     }
 }

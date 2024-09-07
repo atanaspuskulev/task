@@ -44,4 +44,12 @@ class IndexController extends MainController
 
         $this->taskService->update($id, $data);
     }
+
+    public function create(Request $request)
+    {
+        $this->taskService->create([
+            'title' => $request->get('title'),
+            'content' => $request->get('content')
+        ]);
+    }
 }

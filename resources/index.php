@@ -6,10 +6,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <h6>Filters</h6>
-            <hr>
         </div>
+        <div class="col-md-2 pb-2">
+            <button class="btn btn-primary float-end" onclick="openCreateModal()">Create Task</button>
+        </div>
+        <hr>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="form-check form-switch">
                 <input
@@ -22,7 +27,6 @@
                 >
                 <label class="form-check-label" for="flexSwitchCheckDefault">Show completed tasks only</label>
             </div>
-            <hr>
         </div>
     </div>
     <div class="row">
@@ -30,7 +34,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">
+                            <a href="?order_by=id&direction=<?php echo $sortDirection; ?>">#</a>
+                        </th>
                         <th scope="col">
                             <a href="?order_by=title&direction=<?php echo $sortDirection; ?>">Title</a>
                         </th>
@@ -133,6 +139,31 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-success" onclick="confirmComplete();">COMPLETE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="CreateModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CreateModalTitle">Add New Task</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="task_title" class="form-label">Task title</label>
+                    <input type="text" class="form-control" id="task_title" name="title">
+                </div>
+                <div class="mb-3">
+                    <label for="task_content" class="form-label">Task description</label>
+                    <textarea class="form-control" id="task_content" rows="3" name="content"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="createTask();">ADD TASK</button>
             </div>
         </div>
     </div>

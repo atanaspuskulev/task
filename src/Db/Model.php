@@ -14,7 +14,7 @@ abstract class Model
 
     abstract protected function getTable(): string;
 
-    public function create(array $data): int
+    public static function create(array $data): int
     {
         static::boot();
 

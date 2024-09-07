@@ -31,3 +31,26 @@ function confirmComplete() {
         location.reload();
     })
 }
+
+function openCreateModal() {
+    $('#createTaskModal').modal('show');
+}
+
+function createTask() {
+    const title = $('#createTaskModal input[name="title"]').val().trim();
+    const description = $('#createTaskModal textarea[name="content"]').val().trim();
+
+    if (title === '') {
+        alert('Please provide a title for the task.');
+        return;
+    }
+
+    if (description === '') {
+        alert('Please provide a description for the task.');
+        return;
+    }
+
+    $.post('/tasks/create', { title, description }, function () {
+        location.href = '/';
+    })
+}
